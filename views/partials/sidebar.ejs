@@ -1,0 +1,635 @@
+<!-- views/partials/sidebar.ejs -->
+
+<div class="sidebar">
+
+    <!-- Logo -->
+    <div class="logo">
+        𝕏
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navigation">
+
+        <a href="/" class="nav-item">
+            <span class="icon">⌂</span>
+            <span>Home</span>
+        </a>
+
+        <a href="/explore" class="nav-item">
+            <span class="icon">⌕</span>
+            <span>Explore</span>
+        </a>
+
+        <a href="/chat" class="nav-item">
+            <span class="icon">◯</span>
+            <span>Chat</span>
+        </a>
+
+        <a href="/follow" class="nav-item">
+            <span class="icon">♙</span>
+            <span>Follow</span>
+        </a>
+
+        <a href="/grok" class="nav-item">
+            <span class="icon">◉</span>
+            <span>Grok</span>
+        </a>
+
+        <a href="/profile" class="nav-item">
+            <span class="icon">♙</span>
+            <span>Profile</span>
+        </a>
+
+    </nav>
+
+
+    <!-- Post Button -->
+    <button class="post-button" id="openPostModal">
+        Post
+    </button>
+
+</div>
+<div class="post-overlay" id="postOverlay">
+
+    <div class="post-modal">
+
+        <!-- Header -->
+        <div class="post-header">
+
+            <button
+                type="button"
+                class="close-post"
+                id="closePostModal"
+            >
+                ×
+            </button>
+
+            <button
+                type="button"
+                class="draft-button"
+            >
+                Drafts
+            </button>
+
+        </div>
+
+
+        <!-- User + textarea -->
+        <div class="post-body">
+
+            <div class="post-user-row">
+
+                <div class="post-avatar">
+                    👤
+                </div>
+
+                <textarea
+                    id="postContent"
+                    placeholder="What's happening?"
+                    maxlength="280"
+                ></textarea>
+
+            </div>
+
+
+            <!-- Reply permission -->
+            <button
+                type="button"
+                class="reply-permission"
+                id="replyPermissionButton"
+            >
+                🌐 Everyone can reply
+            </button>
+
+        </div>
+
+
+        <!-- Bottom -->
+        <div class="post-footer">
+
+            <div class="post-tools">
+
+                <button type="button" title="Add image">
+                    🖼
+                </button>
+
+                <button type="button" title="GIF">
+                    GIF
+                </button>
+
+                <button type="button" title="Add media">
+                    ◉
+                </button>
+
+                <button type="button" title="Poll">
+                    📊
+                </button>
+
+                <button type="button" title="Emoji">
+                    😊
+                </button>
+
+                <button type="button" title="Schedule">
+                    🗓
+                </button>
+
+                <button type="button" title="Location">
+                    📍
+                </button>
+
+                <button type="button" title="More">
+                    ⚑
+                </button>
+
+            </div>
+
+            <button
+                type="button"
+                class="submit-post"
+                id="submitPost"
+            >
+                Post
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+
+        padding: 20px;
+
+        box-sizing: border-box;
+
+        position: fixed;
+        left: 0;
+        top: 0;
+
+        background-color: #000;
+        color: white;
+    }
+
+
+    /* X Logo */
+
+    .logo {
+        font-size: 32px;
+        font-weight: bold;
+
+        margin-bottom: 30px;
+        margin-left: 15px;
+    }
+
+
+    /* Navigation */
+
+    .navigation {
+        display: flex;
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+
+        gap: 18px;
+
+        padding: 12px 15px;
+
+        color: white;
+        text-decoration: none;
+
+        font-size: 20px;
+        font-weight: 500;
+
+        border-radius: 30px;
+
+        transition: background-color 0.2s;
+    }
+
+
+    .nav-item:hover {
+        background-color: #1d1f23;
+    }
+
+
+    .icon {
+        width: 30px;
+
+        display: flex;
+        justify-content: center;
+
+        font-size: 25px;
+    }
+
+
+    /* POST BUTTON */
+
+    .post-button {
+        width: 100%;
+
+        margin-top: 25px;
+
+        padding: 15px 20px;
+
+        border: none;
+        border-radius: 30px;
+
+        background-color: white;
+        color: black;
+
+        font-size: 18px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: background-color 0.2s;
+    }
+
+
+    .post-button:hover {
+        background-color: #e6e6e6;
+    }
+
+    /* =========================
+   POST MODAL
+========================= */
+
+.post-overlay {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    z-index: 9999;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    padding-top: 70px;
+}
+
+
+/* Modal */
+
+.post-modal {
+    width: 600px;
+
+    max-width: calc(100vw - 30px);
+
+    background: #000;
+
+    color: white;
+
+    border: 1px solid #2f3336;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+}
+
+
+/* Header */
+
+.post-header {
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 18px;
+
+    border-bottom: 1px solid #2f3336;
+}
+
+
+.close-post {
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+
+.draft-button {
+    background: none;
+
+    border: none;
+
+    color: #1d9bf0;
+
+    font-weight: bold;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+
+/* Body */
+
+.post-body {
+    padding: 20px;
+}
+
+
+.post-user-row {
+    display: flex;
+
+    gap: 12px;
+}
+
+
+.post-avatar {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #333;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+
+#postContent {
+    width: 100%;
+
+    min-height: 130px;
+
+    resize: none;
+
+    background: transparent;
+
+    border: none;
+
+    outline: none;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-family: inherit;
+}
+
+
+#postContent::placeholder {
+    color: #71767b;
+}
+
+
+/* Reply permission */
+
+.reply-permission {
+    margin-top: 15px;
+
+    background: none;
+
+    border: none;
+
+    color: #1d9bf0;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    padding: 5px 0;
+}
+
+
+/* Footer */
+
+.post-footer {
+    border-top: 1px solid #2f3336;
+
+    padding: 10px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.post-tools {
+    display: flex;
+
+    gap: 15px;
+}
+
+
+.post-tools button {
+    background: none;
+
+    border: none;
+
+    color: #1d9bf0;
+
+    cursor: pointer;
+
+    font-size: 17px;
+}
+
+
+.post-tools button:hover {
+    color: #1a8cd8;
+}
+
+
+/* Post button */
+
+.submit-post {
+    border: none;
+
+    border-radius: 25px;
+
+    background: white;
+
+    color: black;
+
+    font-weight: bold;
+
+    padding: 10px 20px;
+
+    cursor: pointer;
+}
+
+
+.submit-post:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+</style>
+
+<script>
+
+    const openPostModal =
+        document.getElementById('openPostModal');
+
+    const closePostModal =
+        document.getElementById('closePostModal');
+
+    const postOverlay =
+        document.getElementById('postOverlay');
+
+    const postContent =
+        document.getElementById('postContent');
+
+
+    // Open modal
+    openPostModal.addEventListener('click', () => {
+
+        postOverlay.style.display = 'flex';
+
+        postContent.focus();
+
+    });
+
+
+    // Close modal
+    closePostModal.addEventListener('click', () => {
+
+        postOverlay.style.display = 'none';
+
+    });
+
+
+    // Close when clicking outside modal
+    postOverlay.addEventListener('click', (event) => {
+
+        if (event.target === postOverlay) {
+
+            postOverlay.style.display = 'none';
+
+        }
+
+    });
+
+
+    // Escape key
+    document.addEventListener('keydown', (event) => {
+
+        if (event.key === 'Escape') {
+
+            postOverlay.style.display = 'none';
+
+        }
+
+    });
+
+</script>
+
+<script>
+
+    const submitPost =
+        document.getElementById('submitPost');
+
+
+    submitPost.addEventListener('click', async () => {
+
+        const content =
+            postContent.value.trim();
+
+
+        if (!content) {
+
+            alert('Write something before posting.');
+
+            return;
+
+        }
+
+
+        submitPost.disabled = true;
+
+        submitPost.textContent = 'Posting...';
+
+
+        try {
+
+            const response = await fetch('/post/create', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    content: content,
+
+                    replyPermission: 'everyone'
+
+                })
+
+            });
+
+
+            const data = await response.json();
+
+
+            if (!response.ok) {
+
+                alert(data.error || 'Failed to create post');
+
+                return;
+
+            }
+
+
+            // Clear textarea
+            postContent.value = '';
+
+
+            // Close modal
+            postOverlay.style.display = 'none';
+
+
+            // Refresh page
+            window.location.reload();
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert('Something went wrong.');
+
+        } finally {
+
+            submitPost.disabled = false;
+
+            submitPost.textContent = 'Post';
+
+        }
+
+    });
+
+</script>

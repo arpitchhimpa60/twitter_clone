@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Follow</title>
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding-left: 290px;
+        }
+
+        .container {
+            width: 600px;
+            min-height: 100vh;
+            border-left: 1px solid #2f3336;
+            border-right: 1px solid #2f3336;
+        }
+
+        h1 {
+            padding: 20px;
+        }
+
+        .user {
+            padding: 20px;
+            border-bottom: 1px solid #2f3336;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .handle {
+            color: #71767b;
+        }
+
+        .follow-button {
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <%- include('partials/sidebar') %>
+
+
+    <main class="container">
+
+        <h1>Who to follow</h1>
+
+
+        <% users.forEach(otherUser => { %>
+
+            <div class="user">
+
+                <div>
+
+                    <div class="username">
+                        <%= otherUser.username %>
+                    </div>
+
+                    <div class="handle">
+                        @<%= otherUser.username %>
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="follow-button"
+                    data-user-id="<%= otherUser._id %>"
+                    data-following="<%= otherUser.isFollowing %>"
+                >
+                    <%= otherUser.isFollowing ? 'Following' : 'Follow' %>
+                </button>
+
+            </div>
+
+        <% }) %>
+
+    </main>
+
+
+<script>
+
+    const buttons =
+        document.querySelectorAll('.follow-button');
+
+
+    buttons.forEach(button => {
+
+        button.addEventListener('click', async () => {
+
+            const userId =
+                button.dataset.userId;
+
+
+            // Prevent multiple clicks
+            button.disabled = true;
+
+
+            try {
+
+                const response =
+                    await fetch(`/follow/${userId}`, {
+
+                        method: 'POST'
+
+                    });
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    alert(data.error || 'Something went wrong');
+
+                    return;
+
+                }
+
+
+                // Update button according to backend
+                if (data.following) {
+
+                    button.textContent = 'Following';
+
+                    button.dataset.following = 'true';
+
+                } else {
+
+                    button.textContent = 'Follow';
+
+                    button.dataset.following = 'false';
+
+                }
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                alert('Something went wrong');
+
+
+            } finally {
+
+                button.disabled = false;
+
+            }
+
+        });
+
+    });
+
+</script>
+
+</body>
+
+</html>

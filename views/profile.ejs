@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title><%= user.username %></title>
+
+    <style>
+
+        body {
+            margin: 0;
+
+            background: #000;
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+            padding-left: 290px;
+        }
+
+
+        .profile {
+            width: 650px;
+
+            border-left: 1px solid #2f3336;
+
+            border-right: 1px solid #2f3336;
+
+            min-height: 100vh;
+        }
+
+
+        .profile-header {
+            padding: 20px;
+        }
+
+
+        .username {
+            font-size: 28px;
+
+            font-weight: bold;
+        }
+
+
+        .handle {
+            color: #71767b;
+        }
+
+
+        .stats {
+            display: flex;
+
+            gap: 30px;
+
+            margin-top: 20px;
+        }
+
+
+        .tabs {
+            display: flex;
+
+            border-bottom: 1px solid #2f3336;
+
+            margin-top: 20px;
+        }
+
+
+        .tab {
+            flex: 1;
+
+            padding: 18px;
+
+            text-align: center;
+
+            color: #71767b;
+        }
+
+
+        .tab.active {
+            color: white;
+
+            font-weight: bold;
+
+            border-bottom: 3px solid #1d9bf0;
+        }
+
+
+        .post {
+            padding: 18px;
+
+            border-bottom: 1px solid #2f3336;
+        }
+
+
+        .post-user {
+            font-weight: bold;
+        }
+
+
+        .post-handle {
+            color: #71767b;
+
+            font-weight: normal;
+        }
+
+
+        .post-content {
+            font-size: 17px;
+
+            margin-top: 10px;
+
+            line-height: 1.4;
+        }
+
+
+        .post-time {
+            color: #71767b;
+
+            font-size: 14px;
+
+            margin-top: 10px;
+        }
+
+
+        .post-actions {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 15px;
+
+            color: #71767b;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <%- include('partials/sidebar') %>
+
+
+    <main class="profile">
+
+        <section class="profile-header">
+
+            <div class="username">
+                <%= user.username %>
+            </div>
+
+            <div class="handle">
+                @<%= user.username %>
+            </div>
+
+
+            <div class="stats">
+
+                <span>
+                    0 Following
+                </span>
+
+                <span>
+                    0 Followers
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <div class="tabs">
+
+            <div class="tab active">
+                Posts
+            </div>
+
+            <div class="tab">
+                Replies
+            </div>
+
+            <div class="tab">
+                Reposts
+            </div>
+
+            <div class="tab">
+                Media
+            </div>
+
+        </div>
+
+
+        <!-- POSTS -->
+
+        <% if (posts.length === 0) { %>
+
+            <div class="post">
+
+                <p>
+                    You haven't posted anything yet.
+                </p>
+
+            </div>
+
+        <% } %>
+
+
+        <% posts.forEach(post => { %>
+
+            <article class="post">
+
+                <div>
+
+                    <span class="post-user">
+                        <%= user.username %>
+                    </span>
+
+                    <span class="post-handle">
+                        @<%= user.username %>
+                    </span>
+
+                </div>
+
+
+                <div class="post-content">
+
+                    <%= post.content %>
+
+                </div>
+
+
+                <div class="post-time">
+
+                    <%= post.createdAt.toLocaleString() %>
+
+                </div>
+
+
+                <div class="post-actions">
+
+                    <span>
+                        💬 <%= post.replies %>
+                    </span>
+
+                    <span>
+                        🔁 <%= post.reposts %>
+                    </span>
+
+                    <span>
+                        ❤️ <%= post.likes.length %>
+                    </span>
+
+                    <span>
+                        ⋯
+                    </span>
+
+                </div>
+
+            </article>
+
+        <% }) %>
+
+    </main>
+
+</body>
+
+</html>
